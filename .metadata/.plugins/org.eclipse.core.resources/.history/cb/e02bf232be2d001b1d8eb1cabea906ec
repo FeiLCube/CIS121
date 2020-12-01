@@ -1,0 +1,142 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class HashMapTest {
+    
+    static class MockHashObject {
+        private final int hashCode;
+
+        public MockHashObject(int hashCode) { 
+            this.hashCode = hashCode; 
+        }
+
+        @Override
+        public int hashCode() { 
+            return hashCode; 
+        }
+    }
+    
+    Object obj1;
+    Object obj0;
+    Object obj2;
+    Object obj3;
+    HashMap<Object, Object> testMap;
+    
+    @Before
+    public void test() {
+        obj0 = new MockHashObject(0);
+        obj1 = new MockHashObject(1);
+        obj2 = new MockHashObject(1);
+        obj3 = new MockHashObject(3);
+        testMap = new HashMap<>();
+    }
+    
+    @Test
+    public void testGet() {
+        testMap.put(obj1, "1");
+        testMap.put(obj3, "3");
+        assertEquals("3", testMap.get(obj3));
+        assertEquals("1", testMap.get(obj1));
+        testMap.put(null, "null");
+        assertEquals("null", testMap.get(null));
+    }
+    
+    @Test
+    public void testGetOnNonExistentKey() {
+        assertNull(testMap.get(obj1));
+        assertNull(testMap.get(null));
+    }
+    
+    @Test
+    public void testContains() {
+        testMap.put(obj1, "1");
+        assertTrue(testMap.containsKey(obj1));
+        assertFalse(testMap.containsKey(obj3));
+    }
+    
+    @Test
+    public void testContainsNullKey() {
+        testMap.put(null, "null");
+        assertTrue(testMap.containsKey(null));
+    }
+    
+    @Test
+    public void testPut() {
+        Object oldValue = testMap.put(obj1, "1");
+        assertNull(oldValue);
+        testMap.put(obj3, "3");
+        assertEquals(2, testMap.size());
+        oldValue = testMap.put(obj3, "New Key");
+        assertEquals(2, testMap.size());
+        assertEquals("3", oldValue);
+    }
+    
+    @Test
+    public void testPutChaining() {
+        testMap.put(obj1, "1");
+        testMap.put(obj2, "2");
+        Object value = testMap.get(obj1);
+        assertEquals("1", value);
+        value = testMap.get(obj2);
+        assertEquals("2", value);
+    }
+    
+    @Test
+    public void testPutNullObj() {
+        testMap.put(null, "null");
+        assertEquals(1, testMap.size());
+        assertTrue(testMap.containsKey(null));
+    }
+    
+    @Test
+    public void testResize() {
+        for (int i = 1; i < 13; i++) {
+            testMap.put(new MockHashObject(i), "" + i);
+        }
+        
+        HashMap.Entry<Object, Object>[] result = testMap.getTable();
+        
+        assertEquals(32, result.length);
+        assertEquals(12, testMap.size());
+        
+        for (int i = 17; i < 29; i++) {
+            testMap.put(new MockHashObject(i), "" + i);
+        }
+        
+        result = testMap.getTable();
+        
+        assertEquals(24, testMap.size());
+        assertEquals(64, result.length);
+    }
+    
+    @Test
+    public void testResizeOnChaining() {
+        testMap.put(new MockHashObject(1), "1.1");
+        testMap.put(new MockHashObject(1), "1.2");
+        testMap.put(new MockHashObject(1), "1.3");
+        testMap.put(new MockHashObject(1), "1.4");
+        testMap.put(new MockHashObject(1), "1.5");
+        testMap.put(new MockHashObject(1), "1.6");
+        testMap.put(new MockHashObject(1), "1.7");
+        testMap.put(new MockHashObject(1), "1.8");
+        testMap.put(new MockHashObject(1), "1.9");
+        testMap.put(new MockHashObject(1), "1.10");
+        testMap.put(new MockHashObject(1), "1.11");
+        testMap.put(new MockHashObject(1), "1.12");
+        
+        HashMap.Entry<Object, Object>[] table = testMap.getTable();
+        
+        assertEquals(24, table.length);
+    }
+    
+    @Test
+    public void testRemove() {
+        
+    }
+}

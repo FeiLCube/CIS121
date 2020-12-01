@@ -1,0 +1,61 @@
+// CIS 121, QuadTree
+
+public class QuadTreeNodeImpl implements QuadTreeNode {
+    /**
+     * ! Do not delete this method !
+     * Please implement your logic inside this method without modifying the signature
+     * of this method, or else your code won't compile.
+     * <p/>
+     * As always, if you want to create another method, make sure it is not public.
+     *
+     * @param image image to put into the tree
+     * @return the newly build QuadTreeNode instance which stores the compressed image
+     * @throws IllegalArgumentException if image is null
+     * @throws IllegalArgumentException if image is empty
+     * @throws IllegalArgumentException if image.length is not a power of 2
+     * @throws IllegalArgumentException if image, the 2d-array, is not a perfect square
+     */
+    public static QuadTreeNodeImpl buildFromIntArray(int[][] image) {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public int getColor(int x, int y) {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public void setColor(int x, int y, int c) {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public QuadTreeNode getQuadrant(QuadName quadrant) {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public int getDimension() {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public int getSize() {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public boolean isLeaf() {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public int[][] decompress() {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+
+    @Override
+    public double getCompressionRatio() {
+        throw new UnsupportedOperationException("TODO: implement");
+    }
+}
